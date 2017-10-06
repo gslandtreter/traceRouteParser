@@ -23,10 +23,10 @@ if __name__ == '__main__':
     # You can print the result
 
     # Or travel the tree
-    hopBeforeTheLast = traceroute.hops[len(traceroute.hops) -1]
+    hopBeforeTheLast = traceroute.hops[len(traceroute.hops) -2]
     probe = hopBeforeTheLast.probes[0]
     # And print the IP address
 
-    print "Hop before the last para {} ({})".format(traceroute.dest_name, traceroute.dest_ip)
+    print u"Hop before the last para {} ({})".format(traceroute.dest_name, traceroute.dest_ip)
     asn = get_asn_from_ip(probe.ip)
-    print "{} ({}) [{} - {}]".format(probe.name, probe.ip, asn[0], get_asn_name(asn))
+    print u"{} ({}) [{} - {}]".format(probe.name, probe.ip, asn[0], get_asn_name(asn),)
