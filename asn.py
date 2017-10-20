@@ -1,6 +1,6 @@
 import pyasn
 
-asndb = pyasn.pyasn('ipasn_20171004.db', 'teste.json')
+asndb = pyasn.pyasn('ipasn_20171004.db')
 
 def get_asn_from_ip(ip):
     return asndb.lookup(ip)

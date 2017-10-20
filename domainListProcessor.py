@@ -73,7 +73,7 @@ def process_domain(domain):
                 traceroute.dest_ip,
                 before_the_last_hop.name,
                 before_the_last_hop.ip,
-                provider_asn[0],
+                provider_asn[0] if (provider_asn[0] is not None) else -1,
                 provider_asn[1]
             )
 
@@ -89,7 +89,7 @@ def process_domain(domain):
 
 
 def process_domain_list(domain_list):
-    pool = ThreadPool(500)
+    pool = ThreadPool(100)
     result = pool.map_async(process_domain, domain_list)
 
     while not result.ready():
