@@ -32,6 +32,11 @@ def process_domain(domain):
 
     global tasksDone
     print "Querying Position {} [{}]".format(domain["position"], domain["name"])
+
+    if tcc_mysql.get_if_domain_already_processed(domain["name"]):
+        print "Domain {} already processed. Skipping...".format(domain["name"]);
+        return
+
     nameservers = None
 
     try:
@@ -87,8 +92,14 @@ def process_domain(domain):
     tasksDone += 1
 
 
+def initialize_domain_count():
+    global tasksDone
+    tasksDone = tcc_mysql.get_processed_domain_count()
+    print "Total tasks done: " + str(tasksDone)
+
 
 def process_domain_list(domain_list):
+    initialize_domain_count()
     pool = ThreadPool(100)
     result = pool.map_async(process_domain, domain_list)
 
