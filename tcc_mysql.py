@@ -83,3 +83,80 @@ def get_if_domain_already_processed(domain_name):
             cursor.close()
         if db is not None:
             db.close()
+
+
+def update_ns_asn(ns, asn, ipv6):
+    try:
+
+        # Connect
+        db = MySQLdb.connect(host="tcc-mysql.ctpoo1wonzcp.sa-east-1.rds.amazonaws.com",
+                             user="tcc",
+                             passwd="tcc",
+                             db="tcc")
+        db.autocommit(True)
+        db.ping(True)
+
+        cursor = db.cursor()
+        ret = cursor.execute("UPDATE domain_dnss set ns_asn = %s, ns_ipv6 = %s where ns_ip = %s",(asn, ipv6, ns))
+
+        return ret
+    except Exception, e:
+        print e
+
+    finally:
+        if cursor is not None:
+            cursor.close()
+        if db is not None:
+            db.close()
+
+
+def update_ns_ipv6(ns, ipv6):
+    try:
+
+        # Connect
+        db = MySQLdb.connect(host="tcc-mysql.ctpoo1wonzcp.sa-east-1.rds.amazonaws.com",
+                             user="tcc",
+                             passwd="tcc",
+                             db="tcc")
+        db.autocommit(True)
+        db.ping(True)
+
+        cursor = db.cursor()
+        ret = cursor.execute("UPDATE domain_dnss set ns_ipv6 = %s where ns_ip = %s",(ipv6, ns))
+
+        return ret
+    except Exception, e:
+        print e
+
+    finally:
+        if cursor is not None:
+            cursor.close()
+        if db is not None:
+            db.close()
+
+
+def get_ns_without_asn(limit):
+    try:
+
+        # Connect
+        db = MySQLdb.connect(host="tcc-mysql.ctpoo1wonzcp.sa-east-1.rds.amazonaws.com",
+                             user="tcc",
+                             passwd="tcc",
+                             db="tcc")
+        db.autocommit(True)
+        db.ping(True)
+
+        cursor = db.cursor()
+
+        cursor.execute("select ns_ip, ns_name from domain_dnss where ns_asn is null LIMIT %s", (limit,))
+        results = cursor.fetchall()
+
+        return results
+    except Exception, e:
+        print e
+
+    finally:
+        if cursor is not None:
+            cursor.close()
+        if db is not None:
+            db.close()

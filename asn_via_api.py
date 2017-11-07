@@ -63,7 +63,7 @@ if __name__ == '__main__':
 
     invalid_records = get_invalid_records()
 
-    for record in invalid_records:
+    for record in reversed(invalid_records):
         ip = record[0]
         print "Atualizando IP {}".format(ip)
 
