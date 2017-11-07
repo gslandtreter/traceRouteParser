@@ -85,7 +85,7 @@ def get_if_domain_already_processed(domain_name):
             db.close()
 
 
-def update_ns_asn(ns, asn, ipv6):
+def update_ns_asn(ns, asn, subnet, ipv6):
     try:
 
         # Connect
@@ -97,7 +97,7 @@ def update_ns_asn(ns, asn, ipv6):
         db.ping(True)
 
         cursor = db.cursor()
-        ret = cursor.execute("UPDATE domain_dnss set ns_asn = %s, ns_ipv6 = %s where ns_ip = %s",(asn, ipv6, ns))
+        ret = cursor.execute("UPDATE domain_dnss set ns_asn = %s, ns_subnet = %s, ns_ipv6 = %s where ns_ip = %s",(asn, subnet, ipv6, ns))
 
         return ret
     except Exception, e:

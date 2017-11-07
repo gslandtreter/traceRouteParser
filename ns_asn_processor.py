@@ -29,9 +29,10 @@ def process_list(ns_item):
         print "Updating {}...".format(ns_item[1])
 
         ns_asn = asn.get_asn_from_ip(ns_item[0])
-        as_number = ns_asn[0] if (ns_asn[0] is not None) else -1
+        as_number = ns_asn[0] if (ns_asn[0] is not None) else None
+        as_subnet = ns_asn[1] if (ns_asn[1] is not None) else None
         ipv6 = get_ns_ipv6(ns_item[1])
-        tcc_mysql.update_ns_asn(ns_item[0], as_number, ipv6)
+        tcc_mysql.update_ns_asn(ns_item[0], as_number, as_subnet, ipv6)
 
         global tasksDone
         tasksDone += 1
@@ -56,5 +57,5 @@ if __name__ == '__main__':
     process_domain_list(list)
 
     while len(list) > 0:
-        list = tcc_mysql.get_ns_without_asn(1000)
+        list = tcc_mysql.get_ns_without_asn(10000)
         process_domain_list(list)
