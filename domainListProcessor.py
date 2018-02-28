@@ -100,7 +100,7 @@ def initialize_domain_count():
 
 def process_domain_list(domain_list):
     initialize_domain_count()
-    pool = ThreadPool(100)
+    pool = ThreadPool(1)
     result = pool.map_async(process_domain, domain_list)
 
     while not result.ready():
