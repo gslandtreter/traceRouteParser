@@ -40,7 +40,7 @@ def process_list(ns_item):
 
 def process_domain_list(domain_list):
 
-    pool = ThreadPool(100)
+    pool = ThreadPool(150)
     result = pool.map_async(process_list, domain_list)
 
     while not result.ready():
